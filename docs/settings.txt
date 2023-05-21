@@ -1,0 +1,18 @@
+class Setting():
+
+    def __init__(self):
+
+        self.largura_tela = 1200
+        self.altura_tela = 800
+        self.titulo_tela = " - INVASAO ALIENIGENA - "
+        self.cor_tela = (240,240,240)
+
+        self.velocidade_nave = 2.0
+
+        self.largura_bullet = 3
+        self.altura_bullet = 15
+        self.cor_bullet = (60,60,60)
+        self.velocidade_bullet = 1.0
+        self.quantidade_bullets = 5
+
+

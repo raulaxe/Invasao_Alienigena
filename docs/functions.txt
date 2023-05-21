@@ -1,0 +1,108 @@
+import sys
+import pygame
+from bullet import Bullet
+from alien import Alien
+
+def check_keydown(event,screen, setting, nave, bullets):
+
+    if event.key == pygame.K_LEFT:
+
+        nave.moving_left = True
+
+    if event.key == pygame.K_RIGHT:
+
+        nave.moving_right = True
+
+    if event.key == pygame.K_SPACE:
+
+        fire_bullets(screen, setting, nave, bullets)
+
+    if event.key == pygame.K_q:
+
+        sys.exit()
+
+def check_keyup(event, nave):
+
+    if event.key == pygame.K_LEFT:
+
+        nave.moving_left = False
+
+    if event.key == pygame.K_RIGHT:
+
+        nave.moving_right = False
+
+def check_events(screen, setting, nave, bullets):
+
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+
+            sys.exit()
+
+        if event.type == pygame.KEYDOWN:
+
+            check_keydown(event,screen, setting, nave, bullets)
+
+        if event.type == pygame.KEYUP:
+
+            check_keyup(event, nave)
+
+def update_screen(screen, setting, nave, bullets, aliens):
+
+    screen.fill(setting.cor_tela)
+
+    for bullet in bullets.sprites():
+        bullet.draw_bullet()
+        bullet.bullet_move()
+
+    nave.blit_nave()
+    aliens.draw(screen)
+    pygame.display.flip()
+
+
+def update_bullets(bullets):
+
+    bullets.update()
+    for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+            bullets.remove(bullet)
+
+
+def fire_bullets(screen, setting, nave, bullets):
+
+    if len(bullets) < setting.quantidade_bullets:
+        new_bullet = Bullet(screen, setting, nave)
+        bullets.add(new_bullet)
+
+
+def criar_frota(screen, setting, nave, aliens):
+
+    alien = Alien(screen, setting)
+    largura_alien = alien.rect.width
+    altura_alien = alien.rect.height
+    quant_aliens_linha = get_quant_aliens_x(setting, largura_alien)
+    quant_linhas = get_quant_linhas(screen, setting, altura_alien,nave)
+
+    for numero_linha in range(quant_linhas):
+        for numero_alien in range(quant_aliens_linha):
+            criar_alien(screen, setting, largura_alien, altura_alien, numero_alien,numero_linha, aliens)
+
+def get_quant_aliens_x(setting, largura_alien):
+    espaco_disp_x = setting.largura_tela - (2 * largura_alien)
+    quant_aliens_x = int(espaco_disp_x / (2 * largura_alien))
+    return quant_aliens_x
+
+def get_quant_linhas(screen, setting, altura_alien, nave):
+    esp_disp_y = setting.altura_tela - (3 * altura_alien) - nave.rect.height
+    quant_linhas_y = int(esp_disp_y / (2 * altura_alien))
+    return quant_linhas_y
+
+
+def criar_alien(screen, setting, largura_alien, altura_alien, numero_alien,numero_linha, aliens):
+
+    alien = Alien(screen, setting)
+    alien.x = largura_alien + (2 * largura_alien) * (numero_alien)
+    alien.rect.x = alien.x
+    alien.y = altura_alien = (2 * altura_alien) * (numero_linha)
+    alien.rect.y = alien.y
+    aliens.add(alien)

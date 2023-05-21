@@ -1,0 +1,28 @@
+import pygame
+from configuracoes import Setting
+import funcoes_jogo as fj
+from nave import Nave
+from pygame.sprite import Group
+
+
+
+def run_game():
+
+    pygame.init()
+    setting = Setting()
+    screen = pygame.display.set_mode((setting.largura_tela, setting.altura_tela))
+    pygame.display.set_caption(setting.titulo_tela)
+    nave = Nave(screen, setting)
+    bullets = Group()
+    aliens = Group()
+
+    fj.criar_frota(screen, setting, nave, aliens)
+
+    while True:
+
+        fj.check_events(screen, setting, nave, bullets)
+        nave.update_move()
+        fj.update_bullets(bullets)
+        fj.update_screen(screen, setting, nave, bullets, aliens)
+
+run_game()
