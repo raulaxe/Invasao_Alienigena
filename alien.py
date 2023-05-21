@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Alien(Sprite):
 
     def __init__(self, screen, settings):
@@ -8,13 +9,12 @@ class Alien(Sprite):
         super().__init__()
         self.screen = screen
         self.settings = settings
-        self.image = pygame.image.load("C:/Users/usuario/OneDrive/PROJETOS/pycharm/pythonProject/invasao_alienigena/images/"
-                                       "alien.bmp")
+        self.image = pygame.image.load(
+            "C:/Users/usuario/Documents/MeusReporitorios/invasao_alienigena/images/alien.bmp")
         self.rect = self.image.get_rect()
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
         self.x = float(self.rect.x)
-
 
     def blitme(self):
 
@@ -22,7 +22,8 @@ class Alien(Sprite):
 
     def update(self):
 
-        self.x += (self.settings.velocidade_alien * self.settings.direcao_frota)
+        self.x += (self.settings.velocidade_alien *
+                   self.settings.direcao_frota)
         self.rect.x = self.x
 
     def check_bordas(self):
@@ -34,6 +35,3 @@ class Alien(Sprite):
 
         if self.rect.left <= screen_rect.left:
             return True
-
-
-

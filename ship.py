@@ -7,8 +7,7 @@ class Nave(Sprite):
         super().__init__()
         self.screen = screen
         self.setting = setting
-        self.image = pygame.image.load("C:/Users/usuario/OneDrive/PROJETOS/pycharm/pythonProject/invasao_alienigena/images/"
-                                       "navetrans.png")
+        self.image = pygame.image.load("C:/Users/usuario/Documents/MeusReporitorios/invasao_alienigena/images/navetrans.png")
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.rect.centerx = self.screen_rect.centerx
